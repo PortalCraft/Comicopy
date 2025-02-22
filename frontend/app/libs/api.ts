@@ -2,7 +2,8 @@ import { paramsToFormData, request } from "@/lib/api";
 
 type SearchListParams = {
   manga: string;
-  limit?: number;
+  limit?: string;
+  offset?: string;
 };
 
 type SearchListResponse = {

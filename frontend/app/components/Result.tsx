@@ -1,28 +1,33 @@
 "use client";
 
 import { useInfiniteScroll } from "ahooks";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { searchList } from "../libs/api";
 
 type Props = {
   keywords?: string;
 };
 
+const SEARCH_LIMIT = 10;
+
 const List = (props: Props) => {
   const { keywords } = props;
 
   // 搜索关键词变化后发出请求，支持自动滚动翻页
-  const containerRef = useRef<HTMLDivElement>(null);
   const { data, loading, reload, } = useInfiniteScroll(
     async (d) => {
-      const page = (d?.page ?? 0) + 1;
+      const page = (d?.page ?? -1) + 1;
+      const pageSize = SEARCH_LIMIT;
       const response = await searchList({
         manga: keywords!,
-        limit: page,
+        limit: String(pageSize),
+        offset: String(page * pageSize),
       });
+
       const { data } = response;
       const { list } = data ?? {};
       const hasList = Array.isArray(list) && list.length > 0;
+
       return {
         list: hasList ? list : [],
         page: hasList ? page : undefined,
@@ -30,8 +35,9 @@ const List = (props: Props) => {
     },
     {
       manual: true,
-      target: containerRef,
-      isNoMore: (d) => !d?.page,
+      target: document,
+      threshold: window.innerHeight,
+      isNoMore: (d) => d?.page === undefined,
     }
   );
 
@@ -45,10 +51,12 @@ const List = (props: Props) => {
   }
 
   return (
-    <div ref={containerRef}>
-      <pre>
-        {JSON.stringify(data?.list, null, 3)}
-      </pre>
+    <div>
+      {data?.list.map((item, index) => (
+        <pre key={index}>
+          {JSON.stringify(item, null, 3)}
+        </pre>
+      ))}
     </div>
   );
 };
