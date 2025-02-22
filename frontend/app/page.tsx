@@ -1,14 +1,15 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import Result from "./components/Result";
-import Search from "./components/Search";
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import Result from './components/Result'
+import Search from './components/Search'
+import Download from './components/Download'
 
 const Page = () => {
-  const [keywords, setKeywords] = useState("");
-
+  const [keywords, setKeywords] = useState('')
+  const [activeId] = useState(0) // 下载漫画的ID（预留）
   return (
     <div>
       {/* Header */}
@@ -19,8 +20,9 @@ const Page = () => {
       </div>
       <Search onSearch={setKeywords} />
       <Result keywords={keywords} />
+      <Download activeId={activeId} />
     </div>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
