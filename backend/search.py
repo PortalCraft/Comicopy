@@ -34,7 +34,7 @@ headers = {
 def search():
     # 获取表单数据
     manga = request.form.get('manga', default='')
-    limit = request.form.get('limit', default=12)
+    limit = request.form.get('limit', default='12')
     offset = request.form.get('offset', default='0')
     platform = request.form.get('platform', default='2')
     try:
