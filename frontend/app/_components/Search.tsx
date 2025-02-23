@@ -2,25 +2,17 @@
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { searchAtom } from "@/stores/search";
 import { useFocusWithin } from "ahooks";
+import { useSetAtom } from "jotai";
 import { SearchIcon } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
-type Props = {
-  onSearch?: (value: string) => void;
-};
-
-const Search = (props: Props) => {
-  const { onSearch } = props;
+const Search = () => {
 
   const [value, setValue] = useState("");
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  };
-
-  const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSearch?.(value);
   };
 
   // 组件挂载后聚焦
@@ -32,9 +24,19 @@ const Search = (props: Props) => {
     input.focus();
   }, []);
 
+  // 提交搜索状态
+  const setSearch = useSetAtom(searchAtom);
+  const onSubmitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSearch({
+      isSearching: true,
+      keywords: value,
+    });
+  };
+
   return (
     <div
-      className="flex flex-col justify-center gap-3 sm:w-1/2 mt-40 mx-auto px-4"
+      className="flex flex-col justify-center gap-3 sm:w-1/2 mt-32 mx-auto px-4"
     >
       <h1 className="text-2xl text-center">L O G O</h1>
       <form

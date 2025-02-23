@@ -1,26 +1,23 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Card } from '@/components/ui/card'
+import { useAtom } from 'jotai'
+import { downloadAtom } from '@/stores/download'
 // Dialog：下载弹窗
 // Create：2025-02-22
 
-// Type
-type Props = {
-  activeId: number
-}
-const Download = (props: Props) => {
-  const { activeId } = props // 提取activeID（漫画唯一标识），用于访问对应漫画
-  const [isOpen, setIsOpen] = useState<boolean>(true) // 弹窗是否显示
-  console.log('activeId', activeId)
+const Download = () => {
+  const [download, setDownload] = useAtom(downloadAtom)
+  const { activeId, isOpen } = download
+
   return (
     <Dialog
       open={isOpen}
       onOpenChange={() => {
-        setIsOpen(!isOpen)
+        setDownload({ ...download, isOpen: !isOpen })
       }}>
       <DialogTitle></DialogTitle>
       <DialogContent className="sm:max-w-[425px] h-[500px] flex flex-col justify-between [&>button]:hidden ">

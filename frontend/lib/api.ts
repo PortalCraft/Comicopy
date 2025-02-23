@@ -8,7 +8,7 @@ request.interceptors.response.use((response) => {
   return response.data;
 });
 
-export const paramsToFormData = (params: Record<string, unknown>) => {
+export const objectToFormData = (params: Record<string, unknown>) => {
   const formData = new FormData();
   Object.entries(params).forEach(([key, value]) => {
     formData.append(key, String(value));
