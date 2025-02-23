@@ -9,7 +9,7 @@ import { useAtom } from "jotai";
 import { Masonry, RenderComponentProps } from "masonic";
 import { CSSProperties, PropsWithChildren, useCallback, useEffect, useMemo } from "react";
 import { toast } from "sonner";
-import { SearchList, searchList } from "../lib/api";
+import { SearchList, searchList } from "../_lib/api";
 import ResultItem from "./ResultItem";
 
 type GetListResponse = {

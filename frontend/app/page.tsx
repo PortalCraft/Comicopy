@@ -3,11 +3,11 @@
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import Download from './components/Download'
-import Search from './components/Search'
+import Download from './_components/Download'
+import Search from './_components/Search'
 
 // 确保只在客户端运行，防止报错“window is not defined”
-const Result = dynamic(() => import("./components/Result"), { ssr: false });
+const Result = dynamic(() => import("./_components/Result"), { ssr: false });
 
 const Page = () => {
   return (

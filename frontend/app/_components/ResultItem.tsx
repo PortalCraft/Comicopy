@@ -8,7 +8,7 @@ import { useSetAtom } from "jotai";
 import { Flame } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { SearchList } from "../lib/api";
+import { SearchList } from "../_lib/api";
 
 type Props = SearchList[number];
 
