@@ -30,11 +30,18 @@ const ResultItem = (props: Props) => {
   };
 
   return (
-    <Card className="relative overflow-hidden transition hover:z-10 hover:scale-110">
+    <Card className="group flex flex-col overflow-hidden">
       {/* 封面信息 */}
-      <CardContent className="relative p-0 overflow-hidden">
-        <Link href={mangaDetailsURL}>
-          <Image src={originCoverURL} alt={title} width={350} height={500} loading="lazy" />
+      <CardContent className="relative flex-1 p-0 overflow-hidden">
+        <Link href={mangaDetailsURL} className="flex h-full">
+          <Image
+            src={originCoverURL}
+            alt={title}
+            width={350}
+            height={500}
+            loading="lazy"
+            className="size-full object-cover transition group-hover:scale-110"
+          />
         </Link>
         {/* 热度Badge */}
         <Link href="/popular">
@@ -44,15 +51,17 @@ const ResultItem = (props: Props) => {
           </Badge>
         </Link>
         {/* 底部信息 */}
-        <div className="absolute bottom-0 w-full px-2 pt-8 pb-2 bg-gradient-to-t from-black to-transparent">
-          <Link href={mangaDetailsURL}>
-            <h2 className="text-white">
-              {title}
-            </h2>
-          </Link>
-          <div className="flex flex-wrap gap-x-2">
+        <div className="absolute bottom-0 w-full px-2 pt-8 pb-2 bg-gradient-to-t from-black to-transparent pointer-events-none transition-all group-hover:pt-12 group-hover:pb-4">
+          <h2 className="text-white">
+            {title}
+          </h2>
+          <div className="flex flex-wrap gap-x-2 pointer-events-auto">
             {authors.map((author) => (
-              <Link key={author.id} href={getAuthorURL(author.id)} className="text-sm text-zinc-200 hover:text-white">
+              <Link
+                key={author.id}
+                href={getAuthorURL(author.id)}
+                className="text-sm text-zinc-200 hover:text-white"
+              >
                 {author.name}
               </Link>
             ))}
