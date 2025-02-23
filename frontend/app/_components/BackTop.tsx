@@ -12,7 +12,7 @@ type Props = {
 
 const BackTop = (props: Props) => {
   const {
-    scroller = document.body,
+    scroller = window,
     isVisible = true,
     className,
   } = props;
