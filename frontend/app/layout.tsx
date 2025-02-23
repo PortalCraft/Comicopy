@@ -1,4 +1,6 @@
+import { Provider as JotaiProvider } from "jotai";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 type Props = {
@@ -16,7 +18,10 @@ const Layout = (props: Props) => {
   return (
     <html lang="zh">
       <body>
-        {children}
+        <JotaiProvider>
+          {children}
+          <Toaster />
+        </JotaiProvider>
       </body>
     </html>
   );

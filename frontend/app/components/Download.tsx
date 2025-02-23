@@ -14,7 +14,7 @@ type Props = {
 }
 const Download = (props: Props) => {
   const { activeId } = props // 提取activeID（漫画唯一标识），用于访问对应漫画
-  const [isOpen, setIsOpen] = useState<boolean>(true) // 弹窗是否显示
+  const [isOpen, setIsOpen] = useState<boolean>(false) // 弹窗是否显示
   console.log('activeId', activeId)
   return (
     <Dialog

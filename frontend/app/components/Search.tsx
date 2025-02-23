@@ -34,7 +34,7 @@ const Search = (props: Props) => {
 
   return (
     <div
-      className="flex flex-col justify-center gap-3 sm:w-1/2 mt-40 mx-auto px-4"
+      className="flex flex-col justify-center gap-3 sm:w-1/2 mt-32 mx-auto px-4"
     >
       <h1 className="text-2xl text-center">L O G O</h1>
       <form
