@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const request = axios.create({
-  baseURL: `http://nickyzj.run:4718/api`,
+  baseURL: `${location.protocol}//${location.hostname}:4718/api`,
 });
 
 request.interceptors.response.use((response) => {

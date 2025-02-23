@@ -57,15 +57,15 @@ const List = () => {
       if (hasList) {
         result.list = list;
         result.page = page;
-      } else if (page === 0) {
-        toast.info("没有找到相关漫画");
+      } else {
+        if (page === 0) {
+          toast.info("没有找到相关漫画");
+        }
       }
     }
 
-    setSearch({ ...search, isSearching: false });
-
     return result;
-  }, [search, setSearch]);
+  }, [search]);
 
   const { data, loading, reload } = useInfiniteScroll<GetListResponse>((d) => getList(d?.page), {
     manual: true,
@@ -74,6 +74,9 @@ const List = () => {
     isNoMore: (d) => d?.page === undefined,
     onError: (error) => {
       toast.error(error.message);
+    },
+    onFinally: () => {
+      setSearch({ ...search, isSearching: false });
     },
   });
 

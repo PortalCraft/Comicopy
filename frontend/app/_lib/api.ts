@@ -36,7 +36,7 @@ export type SearchList = ReturnType<typeof selectSearchList>;
 const selectSearchList = (response: string) => {
   const { data } = JSON.parse(response) as SearchListResponse;
   const { list } = data ?? {};
-  return list.map((item) => ({
+  return list?.map((item) => ({
     id: item.path_word,
     title: item.name,
     cover: item.cover,
