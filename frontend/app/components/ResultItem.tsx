@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatNumber } from "@/lib/utils";
 import { downloadAtom } from "@/stores/download";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { Flame } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const ResultItem = (props: Props) => {
   const getAuthorURL = (authorID: string) => `/author/${authorID}`;
 
   // 点击打开下载弹窗
-  const [, setDownload] = useAtom(downloadAtom);
+  const setDownload = useSetAtom(downloadAtom);
   const onClickDownload = () => {
     setDownload({
       isOpen: true,

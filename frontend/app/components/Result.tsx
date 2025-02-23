@@ -3,16 +3,14 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { searchAtom } from "@/stores/search";
 import { useInfiniteScroll, useSize } from "ahooks";
+import { useAtom } from "jotai";
 import { Masonry, RenderComponentProps } from "masonic";
 import { CSSProperties, PropsWithChildren, useCallback, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { SearchList, searchList } from "../lib/api";
 import ResultItem from "./ResultItem";
-
-type Props = {
-  keywords?: string;
-};
 
 type GetListResponse = {
   list: SearchList;
@@ -30,9 +28,7 @@ const Container = (props: PropsWithChildren<{ className?: string; style?: CSSPro
   )
 };
 
-const List = (props: Props) => {
-  const { keywords } = props;
-
+const List = () => {
   const MasonryItem = useCallback(({ data }: RenderComponentProps<SearchList[number]>) => {
     return (
       <ResultItem {...data} />
@@ -40,35 +36,38 @@ const List = (props: Props) => {
   }, []);
 
   /**
-   * 搜索逻辑
-   * 关键词变化后发出请求
-   * 滚动到阈值自动翻页
+   * 搜索相关逻辑
    */
 
-  const getList = useCallback(async (keywords?: string, currentPage?: number) => {
+  const [search, setSearch] = useAtom(searchAtom);
+
+  const getList = useCallback(async (currentPage?: number) => {
     const result: GetListResponse = {
       list: [],
       page: undefined,
     };
 
-    if (!keywords) return result;
+    const { keywords } = search;
+    if (keywords) {
+      const page = (currentPage ?? -1) + 1;
+      const pageSize = SEARCH_LIMIT;
+      const list = await searchList({ keywords, page, pageSize });
 
-    const page = (currentPage ?? -1) + 1;
-    const pageSize = SEARCH_LIMIT;
-    const list = await searchList({ keywords, page, pageSize });
-
-    const hasList = Array.isArray(list) && list.length > 0;
-    if (hasList) {
-      result.list = list;
-      result.page = page;
-    } else if (page === 0) {
-      toast.info("没有找到相关漫画");
+      const hasList = Array.isArray(list) && list.length > 0;
+      if (hasList) {
+        result.list = list;
+        result.page = page;
+      } else if (page === 0) {
+        toast.info("没有找到相关漫画");
+      }
     }
 
-    return result;
-  }, []);
+    setSearch({ ...search, isSearching: false });
 
-  const { data, loading, reload } = useInfiniteScroll<GetListResponse>((d) => getList(keywords, d?.page), {
+    return result;
+  }, [search, setSearch]);
+
+  const { data, loading, reload } = useInfiniteScroll<GetListResponse>((d) => getList(d?.page), {
     manual: true,
     target: window.document,
     threshold: window.innerHeight,
@@ -79,9 +78,10 @@ const List = (props: Props) => {
   });
 
   useEffect(() => {
-    if (!keywords) return;
-    reload();
-  }, [keywords, reload]);
+    if (search.isSearching) {
+      reload();
+    }
+  }, [search.isSearching, reload]);
 
   /**
    * 拿到数据，进行渲染
