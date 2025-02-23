@@ -34,7 +34,7 @@ const ResultItem = (props: Props) => {
       {/* 封面信息 */}
       <CardContent className="relative p-0 overflow-hidden">
         <Link href={mangaDetailsURL}>
-          <Image src={originCoverURL} alt={title} width={350} height={500} />
+          <Image src={originCoverURL} alt={title} width={350} height={500} loading="lazy" />
         </Link>
         {/* 热度Badge */}
         <Link href="/popular">
