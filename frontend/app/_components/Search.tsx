@@ -9,7 +9,6 @@ import { SearchIcon } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 const Search = () => {
-
   const [value, setValue] = useState("");
   const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
