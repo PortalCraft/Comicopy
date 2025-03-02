@@ -9,6 +9,7 @@ class Config:
     # API配置
     API_URLS = {
         'search': 'https://www.copymanga.tv/api/kb/web/searchbc/comics',
+        'comic_page': 'https://www.mangacopy.com/comic/{}',
         'comic_info': 'https://www.mangacopy.com/comicdetail/{}/chapters',
         'chapter_info': 'https://www.mangacopy.com/comic/{}/chapter/{}'
     }
@@ -30,6 +31,3 @@ class Config:
         'default_platform': 2
     }
 
-# 使用方式
-from config import Config
-print(Config.API_URLS['search']) 
