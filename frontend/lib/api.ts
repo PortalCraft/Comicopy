@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const request = axios.create({
-  baseURL: `${location.protocol}//${location.hostname}:4718/api`,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 request.interceptors.response.use((response) => {
