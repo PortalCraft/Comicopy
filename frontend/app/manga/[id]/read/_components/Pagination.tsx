@@ -24,16 +24,16 @@ const Pagination = (props: Props) => {
   const onChangeValue = (value: string) => {
     const nextPage = Number(value);
     window.scrollTo({
-      // X页 = X屏的高度 + 每页间距16px
-      top: (nextPage - 1) * window.innerHeight + 16,
+      // X页 = X屏的高度 + 前X页间距
+      top: (nextPage - 1) * window.innerHeight + (nextPage - 1) * 16,
       behavior: "smooth",
     });
   };
 
   return (
-    <Select onValueChange={onChangeValue}>
+    <Select value={String(page)} onValueChange={onChangeValue}>
       <SelectTrigger className="sticky top-4 w-24 focus:ring-0">
-        <SelectValue placeholder={`${page} / ${total}`} />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {Array.from({ length: total }).map((_, index) => (
