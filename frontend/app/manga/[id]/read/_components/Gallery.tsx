@@ -1,20 +1,34 @@
 "use client";
 
 import Image from "next/image";
+import { ChapterPhotos } from "../_lib/api";
 
-const Gallery = () => {
+type Props = {
+  photos?: ChapterPhotos;
+}
+
+const Gallery = (props: Props) => {
+  const { photos } = props;
+
   return (
     <div className="flex flex-1 flex-col items-center gap-4">
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Image
-          key={index}
-          src={`https://placehold.jp/650x900.jpg?text=${index + 1}`}
-          alt=""
-          width={650}
-          height={900}
-          className="w-auto max-h-screen"
-        />
-      ))}
+      {photos?.map((photo) => {
+        const isFirstPhoto = photo.order === 1;
+        const loading = isFirstPhoto ? "eager" : "lazy";
+
+        return (
+          <Image
+            key={photo.order}
+            src={photo.url}
+            alt=""
+            width={650}
+            height={900}
+            priority={isFirstPhoto}
+            loading={loading}
+            className="w-auto max-h-screen"
+          />
+        )
+      })}
     </div>
   );
 };

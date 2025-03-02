@@ -1,17 +1,46 @@
 "use client";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useScroll } from "ahooks";
+import { useMemo } from "react";
 
-const Pagination = () => {
+type Props = {
+  total?: number;
+};
+
+const Pagination = (props: Props) => {
+  const { total = 0 } = props;
+
+  // 计算当前页码
+  const scroll = useScroll();
+  const page = useMemo(() => {
+    if (!scroll?.top) {
+      return 1;
+    }
+    return Math.ceil(scroll.top / window.innerHeight);
+  }, [scroll]);
+
+  // 滚动到指定页码
+  const onChangeValue = (value: string) => {
+    const nextPage = Number(value);
+    window.scrollTo({
+      // X页 = X屏的高度 + 每页间距16px
+      top: (nextPage - 1) * window.innerHeight + 16,
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <Select>
+    <Select onValueChange={onChangeValue}>
       <SelectTrigger className="sticky top-4 w-24 focus:ring-0">
-        <SelectValue placeholder="1 / 3" />
+        <SelectValue placeholder={`${page} / ${total}`} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="1">1</SelectItem>
-        <SelectItem value="2">2</SelectItem>
-        <SelectItem value="3">3</SelectItem>
+        {Array.from({ length: total }).map((_, index) => (
+          <SelectItem key={index} value={String(index + 1)}>
+            {index + 1}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );
