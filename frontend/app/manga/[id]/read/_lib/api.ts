@@ -82,7 +82,7 @@ export const getMangaInfo = async (params: GetMangaInfoParams) => {
 type GetChapterPhotosParams = {
   mangaID: string;
   type?: number;
-  chapterID?: string;
+  chapterID: string;
 };
 
 type GetChapterPhotosResponse = {
@@ -108,22 +108,10 @@ const selectChapterPhotos = (response: string) => {
 };
 
 export const getChapterPhotos = async (params: GetChapterPhotosParams) => {
-  let {
+  const {
     mangaID,
-    type = 1,
-    chapterID
+    chapterID,
   } = params;
-
-  if (!chapterID) {
-    const mangaInfo = await getMangaInfo({
-      id: mangaID,
-      type,
-    });
-    const chapter = mangaInfo.chapters.find((chapter) => chapter.type === type) ?? mangaInfo.chapters[0];
-    chapterID = chapter.id;
-    // TODO: 不知道为啥连续发2个请求会报错，要加个延时，后续排查
-    await new Promise((resolve) => setTimeout(resolve));
-  }
 
   const body = {
     manga: mangaID,

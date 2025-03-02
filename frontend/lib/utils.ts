@@ -13,3 +13,7 @@ const numberFormatter = new Intl.NumberFormat("zh", {
 export const formatNumber = (number: number) => {
   return numberFormatter.format(number);
 };
+
+export const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};

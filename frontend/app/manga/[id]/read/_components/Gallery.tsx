@@ -25,7 +25,7 @@ const Gallery = (props: Props) => {
             height={900}
             priority={isFirstPhoto}
             loading={loading}
-            className="w-auto max-h-screen"
+            className="w-full"
           />
         )
       })}

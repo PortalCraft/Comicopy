@@ -12,11 +12,11 @@ const Back = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       className="sticky top-2 mt-2 p-2 text-zinc-400 rounded-full hover:text-black"
       onClick={onClick}
     >
-      <ChevronLeft className="!size-7" />
+      <ChevronLeft className="!size-6" />
     </Button>
   );
 };
