@@ -1,5 +1,0 @@
-aiohttp==3.11.12
-Flask==3.1.0
-Flask_Cors==5.0.0
-PyExecJS==1.5.1
-Requests==2.32.3
