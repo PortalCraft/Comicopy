@@ -9,7 +9,8 @@ class Config:
     # API配置
     API_URLS = {
         'search': 'https://www.copymanga.tv/api/kb/web/searchbc/comics',
-        'comic_info': 'https://www.mangacopy.com/comic/{}'
+        'comic_info': 'https://www.mangacopy.com/comicdetail/{}/chapters',
+        'chapter_info': 'https://www.mangacopy.com/comic/{}/chapter/{}'
     }
     
     HEADERS = {
