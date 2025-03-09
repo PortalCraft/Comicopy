@@ -1,8 +1,8 @@
-import { sleep } from "@/lib/utils";
-import Back from "./_components/Back";
-import Gallery from "./_components/Gallery";
-import Pagination from "./_components/Pagination";
-import { getChapterPhotos, getMangaInfo } from "./_lib/api";
+import { sleep } from '@/app/lib/utils';
+import Back from './components/Back';
+import Gallery from './components/Gallery';
+import Pagination from './components/Pagination';
+import { getChapterPhotos, getMangaInfo } from './lib/api';
 
 type Props = {
   params: {
@@ -30,7 +30,7 @@ const Page = async (props: Props) => {
   });
 
   return (
-    <div className="flex items-start gap-4 px-4 min-h-screen">
+    <div className='flex items-start gap-4 px-4 min-h-screen'>
       <Back />
       <Gallery photos={chapterPhotos} />
       <Pagination total={chapterPhotos.length} />
