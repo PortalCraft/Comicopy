@@ -1,7 +1,8 @@
-import Back from "./_components/Back";
-import Gallery from "./_components/Gallery";
-import Pagination from "./_components/Pagination";
-import { getChapterPhotos } from "./_lib/api";
+import { sleep } from '@/app/lib/utils';
+import Back from './components/Back';
+import Gallery from './components/Gallery';
+import Pagination from './components/Pagination';
+import { getChapterPhotos, getMangaInfo } from './lib/api';
 
 type Props = {
   params: {
@@ -13,21 +14,23 @@ type Props = {
 
 const Page = async (props: Props) => {
   const { params } = props;
-  const {
-    id,
-    type,
-    chapterID,
-  } = await Promise.resolve(params);
+  const { id } = await Promise.resolve(params);
 
-  // 获取图片列表
+  // 获取漫画详情
+  const mangaInfo = await getMangaInfo({ id });
+  const chapterID = mangaInfo.chapters[0].id;
+
+  // TODO: 解决连续发送两个请求的read:ECONNRESET错误
+  await sleep(0);
+
+  // 获取章节图片
   const chapterPhotos = await getChapterPhotos({
     mangaID: id,
-    type,
     chapterID,
   });
 
   return (
-    <div className="flex items-start gap-4 px-4 min-h-screen">
+    <div className='flex items-start gap-4 px-4 min-h-screen'>
       <Back />
       <Gallery photos={chapterPhotos} />
       <Pagination total={chapterPhotos.length} />
